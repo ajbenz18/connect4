@@ -150,14 +150,17 @@ class App extends React.Component{
   drop(columnNum, newVal){
     // oldColumn = this.state.placements[columnNum].splice()
     for (let i = this.state.placements[columnNum].length-1; i >= 0 ; i--){
-      if (this.state.placements[columnNum][i] == 0){
+      if (this.state.placements[columnNum][i] === 0){
         this.state.placements[columnNum][i] = this.state.nextVal;
         this.setState({
           placements: this.state.placements,
           nextVal: this.state.lastVal,
           lastVal: this.state.nextVal,
         });
+        let status = document.getElementById("turnStatus");
+        status.textContent="Poop";
         break;
+
       }
     }
     

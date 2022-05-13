@@ -26,8 +26,30 @@
     -->
     <title>React App</title>
   </head>
+
+  <script type="text/javascript">
+    function startGame(){
+      console.log("starting");
+      let form = document.getElementById("playerNameForm");
+      form.style.display = "None";
+      let turnStatus = document.getElementById("turnStatus");
+      turnStatus.style.display="block";
+    }
+  </script>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <h1>Connect 4</h1>
+    <form id="playerNameForm" action="javascript:startGame()">
+      <div>Enter player names below to start the game</div>
+      <label for="p1" id="p1lab">Player 1:</label>
+      <input type="text" id="p1" name="p1">
+      <label for="p2" id="p2lab">Player 2:</label>
+      <input type="text" id="p2" name="p2">
+      <input type="submit">
+    </form>
+
+    <div id="turnStatus">It is player 1's turn</div>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.
