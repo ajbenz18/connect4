@@ -15,25 +15,20 @@ class Square extends React.Component {
   render() {
     if (this.props.val == 0){
       return (
-        <div
-          className="boxy">
-          {this.props.val}
-        </div>
+        <div className="boxy"></div>
       );
     }
     else if (this.props.val == 1){
       return (
-        <div
-          className="boxy" style={{backgroundColor: "#f00"}}>
-          {this.props.val}
+        <div className="boxy">
+          <div className="circle" style={{backgroundColor: "#f00"}}></div>
         </div>
       );
     }
     else{
       return (
-        <div
-          className="boxy" style={{backgroundColor: "#00f"}}>
-          {this.props.val}
+        <div className="boxy">
+          <div className="circle" style={{backgroundColor: "#00f"}}></div>
         </div>
       );
     }
@@ -64,43 +59,6 @@ class Column extends React.Component{
   }
 }
 
-class Grid extends React.Component{
-  constructor(props){
-    super(props);
-  }
-
-  render(){
-    return(
-      <div>
-        <div className="board-column">
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>          
-        </div>
-        <div className="board-column">
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>          
-        </div>
-        <div className="board-column">
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>
-          <Square/>          
-        </div>
-      </div>
-    )
-  }
-}
-
 class Dropper extends React.Component{
   constructor(props){
     super(props);
@@ -112,7 +70,6 @@ class Dropper extends React.Component{
   render(){
     return(
       <button className="dropper" onClick={() => this.props.onClick(this.state.col, 1)}>
-        {this.state.col}
       </button>
     )
   }
@@ -126,6 +83,7 @@ class App extends React.Component{
       nextVal: 1,
       lastVal: 2,
     }
+    this.enabled = true;
     let a = "a";
   }
 
@@ -149,6 +107,9 @@ class App extends React.Component{
 
   drop(columnNum, newVal){
     // oldColumn = this.state.placements[columnNum].splice()
+    if (this.enabled === false){
+      return;
+    }
     for (let i = this.state.placements[columnNum].length-1; i >= 0 ; i--){
       if (this.state.placements[columnNum][i] === 0){
         this.state.placements[columnNum][i] = this.state.nextVal;
@@ -158,12 +119,106 @@ class App extends React.Component{
           lastVal: this.state.nextVal,
         });
         let status = document.getElementById("turnStatus");
-        status.textContent="Poop";
+        let statusString = ", it is your turn!";
+        let playername = document.getElementById("p2").value;
+        if (this.state.nextVal === 1){
+          console.log('should say p1"s name');
+          playername = document.getElementById("p1").value;
+        }
+        status.textContent= playername + statusString;
+        let winner = this.checkWin();
+        if (winner > 0){ // game is over
+          if (winner === 1){
+            playername = document.getElementById("p1").value;
+          }
+          if (winner === 2){
+            playername = document.getElementById("p2").value;
+          }
+          status.textContent = "Congrats, " + playername + "! You won! Refresh the page to restart the game.";
+          this.enabled = false;
+        }
         break;
 
       }
     }
     
+  }
+
+  checkWin(){
+    // remember, a row in this.state.placements is visually a column in the game
+
+    // check for vertical wins first
+    let twos = [2, 2, 2, 2].join(',');
+    let ones = [1, 1, 1, 1].join(',');
+    for (let c=0; c < this.state.placements.length; c++){
+      for (let r=0; r <= this.state.placements[0].length - 4; r++){
+        // let is1 = true;
+        // let is2 = true;
+        // for (let i=0; i<4; i++){
+        //   if 
+        // }
+        if (this.state.placements[c].slice(r, r+4).join(',') === twos){
+          console.log("player 2 wins");
+          return 2;
+        }
+        if (this.state.placements[c].slice(r, r+4).join(',') === ones){
+          console.log("player 1 wins");
+          return 1;
+        }
+      }
+    }
+
+    // check for horizontal wins
+    for (let r=0; r < this.state.placements[0].length; r++){
+      let row = this.state.placements.map(function(value, index) {return value[r]});
+      console.log(row);
+      for (let c=0; c <= this.state.placements.length - 4; c++){
+        if (row.slice(c, c+4).join(',') === twos){
+          console.log("player 2 wins");
+          return 2;
+        }
+        if (row.slice(c, c+4).join(',') === ones){
+          console.log("player 1 wins");
+          return 1;
+        }
+      }
+    }
+
+    // check for descending diagonal wins
+    for (let i=0; i<this.state.placements.length-3; i++){
+      for (let j=0; j<this.state.placements[0].length-3; j++){
+        let slice = []
+        for (let k=0; k<4; k++){
+          slice.push(this.state.placements[i+k][j+k]);
+        }
+        if (slice.join(',') === twos){
+          console.log("player 2 wins");
+          return 2;
+        }
+        if (slice.join(',') === ones){
+          console.log("player 1 wins");
+          return 1;
+        }
+      }
+    }
+
+    // check for ascending diagonal wins
+    for (let i=3; i<this.state.placements.length; i++){
+      for (let j=0; j<this.state.placements[0].length-3; j++){
+        let slice = []
+        for (let k=0; k<4; k++){
+          slice.push(this.state.placements[i-k][j+k]);
+        }
+        if (slice.join(',') === twos){
+          console.log("player 2 wins");
+          return 2;
+        }
+        if (slice.join(',') === ones){
+          console.log("player 1 wins");
+          return 1;
+        }
+      }
+    }
   }
   
 }

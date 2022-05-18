@@ -14,4 +14,45 @@ code {
 
 #turnStatus{
   display: None;
+  font-size: 3vw;
+  text-align: center;
+}
+
+#root{
+  display: None;
+  width: 45vw;
+  margin: auto;
+}
+
+.heading{
+  margin: auto;
+  text-align: center;
+  padding-top: 2vh;
+  font-size: 5vw;
+  padding-bottom: 2vh;
+}
+
+#playerNameForm{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  width: 30em;
+  margin: auto;
+  font-size: 2vw;
+  line-height: 3vw;
+  height: 12vw
+}
+
+#submit{
+  margin: auto;
+  height: 3vh;
+  width: 25em;
+}
+
+.entry{
+  flex: 1;
+}
+
+#p1, #p2{
+  height: 1vw;
 }
