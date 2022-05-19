@@ -3,7 +3,7 @@
 
 # ReactJS Connect4
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). I deployed it to google cloud and it can be played at https://connect4-app1.uc.r.appspot.com/
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). I deployed it to AWS Amplify and it can be played at https://main.d2q2obcz3nfh3z.amplifyapp.com/
 
 ## Available Scripts
 
