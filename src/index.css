@@ -14,7 +14,7 @@ code {
 
 #turnStatus{
   display: None;
-  font-size: 3vw;
+  font-size: 1.5vw;
   text-align: center;
 }
 
@@ -27,9 +27,9 @@ code {
 .heading{
   margin: auto;
   text-align: center;
-  padding-top: 2vh;
-  font-size: 5vw;
-  padding-bottom: 2vh;
+  padding-top: 1vh;
+  font-size: 3.5vw;
+  padding-bottom: 1vh;
 }
 
 #playerNameForm{
