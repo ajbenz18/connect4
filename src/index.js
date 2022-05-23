@@ -84,7 +84,6 @@ class App extends React.Component{
       lastVal: 2,
     }
     this.enabled = true;
-    let a = "a";
   }
 
   render(){
@@ -113,19 +112,20 @@ class App extends React.Component{
     for (let i = this.state.placements[columnNum].length-1; i >= 0 ; i--){
       if (this.state.placements[columnNum][i] === 0){
         this.state.placements[columnNum][i] = this.state.nextVal;
+        let status = document.getElementById("turnStatus");
+        let statusString = ", it is your turn!";
+        let playername = document.getElementById("p2").value;
+        if (this.state.nextVal === 2){
+          playername = document.getElementById("p1").value;
+        }
+        status.textContent= playername + statusString;
         this.setState({
           placements: this.state.placements,
           nextVal: this.state.lastVal,
           lastVal: this.state.nextVal,
         });
-        let status = document.getElementById("turnStatus");
-        let statusString = ", it is your turn!";
-        let playername = document.getElementById("p2").value;
-        if (this.state.nextVal === 1){
-          console.log('should say p1"s name');
-          playername = document.getElementById("p1").value;
-        }
-        status.textContent= playername + statusString;
+      
+        
         let winner = this.checkWin();
         if (winner > 0){ // game is over
           if (winner === 1){
@@ -152,11 +152,7 @@ class App extends React.Component{
     let ones = [1, 1, 1, 1].join(',');
     for (let c=0; c < this.state.placements.length; c++){
       for (let r=0; r <= this.state.placements[0].length - 4; r++){
-        // let is1 = true;
-        // let is2 = true;
-        // for (let i=0; i<4; i++){
-        //   if 
-        // }
+
         if (this.state.placements[c].slice(r, r+4).join(',') === twos){
           console.log("player 2 wins");
           return 2;

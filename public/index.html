@@ -36,6 +36,13 @@
       turnStatus.style.display="block";
       let app = document.getElementById('root');
       app.style.display = 'block';
+
+      // set whose turn it is
+      let status = document.getElementById("turnStatus");
+      let statusString = ", it is your turn!";
+      let playername = document.getElementById("p1").value;
+      status.textContent= playername + statusString;
+
     }
   </script>
   <body>
